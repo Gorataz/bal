@@ -100,7 +100,7 @@ int pop_lettre (struct File_lettre *LET)
 {
     LET->courant=LET->premier;
     struct lettre *elmout; 
-    while (LET->courant!=NULL) 
+    while (LET->courant!=NULL) //Il y avait une erreur dans la version précédente : courant=!NULL a la place de courant!=NULL, je pense que c'est ca qui deconnait
     {
         printf("%s\n",LET->courant->message);
         elmout=LET->courant;
