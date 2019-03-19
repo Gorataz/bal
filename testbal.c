@@ -115,8 +115,11 @@ void pop_lettre (struct File_lettre *LET)
     }
 }
 
-void main() 
+void main(int argc,char **argv) 
 {
+    //Recuperation des options :
+
+
     // quoi faire ?
     //Etape 1 : Creer une bal
     //Etape 2 : Creer une lettre pour la bal 1
@@ -159,4 +162,35 @@ void main()
     Quatrieme essai : en passant par ssEnsemble1.premier->message ca marche !
     */
     printf("%s\n",lettre1.message);
+
+    /*
+    Definition des operations possibles :
+    - Creation d'une structure de boites aux lettres :
+        struct File_bal Nom_de_l_ensemble;
+        Creer_file_bal(&Nom_de_l_ensemble);
+
+    - Creation d'une boite aux lettres :
+        struct bal_i nom_boite_aux_lettres;
+
+    - Lier une boite aux lettres avec un ensemble :
+        push_bal(&nom_boite_aux_lettres,&Nom_de_l_ensemble);
+
+    - Creation d'une structure de lettres (sous ensemble d'une boite aux lettres) :
+        struct File_lettre Ensemble_de_lettres;
+        Creer_file_lettre(&Ensemble_de_lettres,&BAL_mere);
+
+    - Creation d'une lettre :
+        struct lettre lettre_A;
+    
+    - Lier une lettre et un ensemble de lettres :
+        push_lettre(&lettre_A,&Ensemble_de_lettres);
+
+    - Lire le numero de la boite aux lettres:
+        Nom_de_l_ensemble.premier->i;
+    
+    - Lire un message d'une boite aux lettres specifiques :
+        Ensemble_de_lettres.courant->message;
+    
+    //Essayer de passer par un "pointeur" temporaire
+    */
 }
