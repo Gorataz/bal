@@ -100,7 +100,8 @@ int pop_lettre (struct File_lettre *LET)
 {
     LET->courant=LET->premier;
     struct lettre *elmout; 
-    while (LET->courant!=NULL) //Il y avait une erreur dans la version précédente : courant=!NULL a la place de courant!=NULL, je pense que c'est ca qui deconnait
+    while (LET->courant!=NULL) 
+    //Il y avait, je pense, une erreur dans la version précédente : courant=!NULL a la place de courant!=NULL
     {
         printf("%s\n",LET->courant->message);
         elmout=LET->courant;
@@ -111,12 +112,32 @@ int pop_lettre (struct File_lettre *LET)
 
 void main() 
 {
-    struct bal_i *b; //que faire ici ?
-    b->i=0; //Un numero de bal a 0 (pour un test) ? Ou c'est une initialisation ?
-    b->bal_suivant=NULL; 
-    b->premiere_lettre=NULL;
-
-    struct File_bal *BAL;
-    Creer_file_bal(BAL);
-    //push_bal(b,BAL) ;
+    // quoi faire ?
+    //Etape 1 : Creer une bal
+    //Etape 2 : Creer une lettre pour la bal 1
+    
+    
+    //Realisation 
+    //Etape 1 - creation d'une bal
+    struct File_bal* Ensemble;
+    struct bal_i* BAL1;
+    BAL1->i=1; //Il y aura un autre moyen de changer 'automatiquement' cette valeur -> cf recuperation des options dans le terminal
+    Creer_file_bal(Ensemble); //Creation de la structure de BALs
+    push_bal(BAL,Ensemble); //On a push dans la file de BALs une premiere BAL
+    //Donc normalement ici on a une bal dans une file.
+    //On cherche maintenant a creer une lettre et la push dans cette bal
+    //
+    //Etape 2
+    //
+    struct File_lettre* ssEnsemble1;
+    struct lettre* lettre1;
+    lettre1->message="coucou";
+    Creer_file_lettre(ssEnsemble1, BAL1); //syntaxe correcte est peut-etre Creer_file_lettre(struct File_lettre* ssEnsemble1, struct bal_i* BAL1); ?
+    push_lettre(lettre1,ssEnsemble1);
+    //Verifions maintenant que tout ce passe bien:
+    //
+    //Verifications
+    //
+    printf("%s\n",Ensemble->premier->premiere_lettre->message);
+    return(0);
 }
