@@ -8,18 +8,6 @@ int Creer_file_bal(struct File_bal *BAL)
     return 0;
 }
 
-//Fonction de creation d'une file (de taille nulle)
-// on crée le lien entre la bal et la file de lettre
-int Creer_file_lettre(struct File_lettre *LET, struct bal_i *bal) 
-{
-    LET->premier=NULL;
-    LET->dernier=NULL;
-    LET->courant=NULL;
-    bal->premiere_lettre=LET->premier ;
-    return 0;
-}
-
-
 /////////////////////////////////////////////////////////
 /*
 Nous definissons maintenant les primitives des structures de donnees de type file que sont :
@@ -55,7 +43,7 @@ int push_bal(struct bal_i *element, struct File_bal *BAL)
 
         BAL->dernier=malloc(sizeof(struct bal_i));
         BAL->dernier=element;
-        element->premiere_lettre= NULL;
+        element->LET= NULL;
         element->bal_suivant=NULL;
         BAL->premier=BAL->dernier;
         printf("vide\n");
@@ -67,7 +55,7 @@ int push_bal(struct bal_i *element, struct File_bal *BAL)
         struct bal_i *nouveau;
         nouveau=BAL->dernier; // struct temporaire qui garde le dernier element de la liste
         BAL->dernier=malloc(sizeof(struct bal_i));
-        element->premiere_lettre= NULL;
+        element->LET= NULL;
         element->bal_suivant=NULL;
         nouveau->bal_suivant=BAL->dernier;
         printf("pas vide\n");
@@ -115,7 +103,7 @@ void pop_lettre (struct File_lettre *LET)
     }
 }
 
-void main(int argc,char **argv) 
+void main() 
 {
     //Recuperation des options :
 
@@ -127,27 +115,26 @@ void main(int argc,char **argv)
     
     //Realisation 
     //Etape 1 - creation d'une bal
-    struct File_bal Ensemble;
-    struct bal_i BAL;
-    BAL.i=1; //Il y aura un autre moyen de changer 'automatiquement' cette valeur -> cf recuperation des options dans le terminal
-    Creer_file_bal(&Ensemble); //Creation de la structure de BALs
-    push_bal(&BAL,&Ensemble); //On a push dans la file de BALs une premiere BAL
+    struct File_bal* Ensemble;
+    struct bal_i* BAL;
+    BAL->i=1; //Il y aura un autre moyen de changer 'automatiquement' cette valeur -> cf recuperation des options dans le terminal
+    Creer_file_bal(Ensemble); //Creation de la structure de BALs
+    push_bal(BAL,Ensemble); //On a push dans la file de BALs une premiere BAL
     //Donc normalement ici on a une bal dans une file.
     //On cherche maintenant a creer une lettre et la push dans cette bal
     //
     //Etape 2
     //
-    struct File_lettre ssEnsemble1;
-    struct lettre lettre1;
-    lettre1.message="coucou";
-    Creer_file_lettre(&ssEnsemble1,&BAL); //syntaxe correcte est peut-etre Creer_file_lettre(struct File_lettre* ssEnsemble1, struct bal_i* BAL1); ?
-    push_lettre(&lettre1,&ssEnsemble1);
+    struct File_lettre* ssEnsemble1;
+    struct lettre* lettre1;
+    lettre1->message="coucou";
+    push_lettre(lettre1,ssEnsemble1);
     //Verifions maintenant que tout ce passe bien:
     //
     //Verifications
     //
 
-    printf("%s\n",ssEnsemble1.premier->message);
+    printf("%s\n",ssEnsemble1->premier->message);
     /*
     Pb ici : on a rien après Ensemble.premier. ce qui veut dire qu'il n'y a pas de liens creer 
     entre la structures de boites aux lettres et un element de cette structure.
@@ -161,7 +148,7 @@ void main(int argc,char **argv)
     Troisieme essai : toujours une erreur de segmentation.
     Quatrieme essai : en passant par ssEnsemble1.premier->message ca marche !
     */
-    printf("%s\n",lettre1.message);
+    printf("%s\n",lettre1->message);
 
     /*
     Definition des operations possibles :
